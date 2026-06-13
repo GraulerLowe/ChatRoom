@@ -1,0 +1,8 @@
+{
+	"InstallScripts" : 
+	[
+		"/home/grauler/Documentos/Chat_c/build/cmake_install.cmake",
+		"/home/grauler/Documentos/Chat_c/build/_deps/nlohmann_json-build/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

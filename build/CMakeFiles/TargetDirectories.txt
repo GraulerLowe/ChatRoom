@@ -1,0 +1,6 @@
+/home/grauler/Documentos/Chat_c/build/CMakeFiles/servidor.dir
+/home/grauler/Documentos/Chat_c/build/CMakeFiles/cliente.dir
+/home/grauler/Documentos/Chat_c/build/CMakeFiles/edit_cache.dir
+/home/grauler/Documentos/Chat_c/build/CMakeFiles/rebuild_cache.dir
+/home/grauler/Documentos/Chat_c/build/_deps/nlohmann_json-build/CMakeFiles/edit_cache.dir
+/home/grauler/Documentos/Chat_c/build/_deps/nlohmann_json-build/CMakeFiles/rebuild_cache.dir
