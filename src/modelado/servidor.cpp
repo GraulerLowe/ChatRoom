@@ -64,7 +64,25 @@ int main()
       for (int i = 0; i < nfds; i++) {
         if (events[i].data.fd == serverSocket) {
           int clientSocket = accept(serverSocket, nullptr, nullptr);
-          std::cout << "Nueva conexión entrante...\n"<< clientSocket << endl;          
+          std::cout << "Nueva conexión entrante...\n" << clientSocket << endl;
+
+          struct epoll_event clienteEvent;
+          clienteEvent.events = EPOLLIN;
+          clienteEvent.data.fd = clientSocket;
+          epoll_ctl(epfd, EPOLL_CTL_ADD, clientSocket, &clienteEvent);
+          
+        } else {
+          
+          int client_fd = events[i].data.fd;
+          char buffer[1024] = {0};
+          int bytes = recv(client_fd, buffer, sizeof(buffer) - 1, 0);
+          if (bytes <= 0) {
+            close(client_fd);
+            cout << "Cliente desconectado:" << client_fd;
+            epoll_ctl(epfd, EPOLL_CTL_DEL, client_fd, nullptr);
+          } else {
+            cout <<"Mensaje de"<<client_fd<< ":"<<buffer;
+            }
           }
         }
       }
