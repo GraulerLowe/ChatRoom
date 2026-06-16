@@ -1,3 +1,5 @@
+#include <iostream>
+#include <ostream>
 #include <cstring>
 #include <netinet/in.h>
 #include <sys/socket.h>
@@ -15,9 +17,10 @@ int main()
     serverAddress.sin_addr.s_addr = INADDR_ANY;
 
     // sending connection request
-    connect(clientSocket, (struct sockaddr*)&serverAddress,
-            sizeof(serverAddress));
-
+    if (connect(clientSocket, (struct sockaddr*)&serverAddress, sizeof(serverAddress)) ==-1) {
+      std::cerr << "Error al conectarse";
+      return 1;
+      }
     // sending data
     const char* message = "Hello, server!";
     send(clientSocket, message, strlen(message), 0);
