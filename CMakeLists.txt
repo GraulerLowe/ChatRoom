@@ -13,8 +13,11 @@ FetchContent_MakeAvailable(nlohmann_json)
 
 # Ejecutables
 
+include_directories(src/libs)
+
 add_executable(servidor src/modelado/servidor.cpp)
 
 add_executable(cliente src/modelado/cliente.cpp)
-target_link_libraries(servidor PRIVATE nlohmann_json::nlohmann_json)
-target_link_libraries(cliente PRIVATE nlohmann_json::nlohmann_json)
+include_directories(src/libs)
+
+target_include_directories(cliente PRIVATE ${CMAKE_SOURCE_DIR}/libs)

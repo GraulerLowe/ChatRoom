@@ -4,23 +4,45 @@
 #include <netinet/in.h>
 #include <sys/socket.h>
 #include <unistd.h>
+#include "json.hpp"
+
+using namespace std;
+
+using json = nlohmann::json;
+
 // Archivo de prueba
-int main()
-{
+int main() {
+
+
+    int puerto;
+    cout<<"Ingresa el puerto de servidor: ";
+    cin >> puerto;
+
+    if (puerto < 1 || puerto > 65535) {
+        cerr << "Puerto inválido. Debe estar entre 1 y 65535" << std::endl;
+        return 1;
+    }
+    
     // creating socket
     int clientSocket = socket(AF_INET, SOCK_STREAM, 0);
 
     // specifying address
     sockaddr_in serverAddress;
     serverAddress.sin_family = AF_INET;
-    serverAddress.sin_port = htons(8080);
+    serverAddress.sin_port = htons(puerto);
     serverAddress.sin_addr.s_addr = INADDR_ANY;
 
     // sending connection request
     if (connect(clientSocket, (struct sockaddr*)&serverAddress, sizeof(serverAddress)) ==-1) {
       std::cerr << "Error al conectarse";
+      close(clientSocket);
       return 1;
-      }
+    }
+
+    std::cout << "✅ Conectado exitosamente al servidor en el puerto " << puerto << std::endl;    
+
+    json miJson;
+        
     // sending data
     const char* message = "Hello, server!";
     send(clientSocket, message, strlen(message), 0);

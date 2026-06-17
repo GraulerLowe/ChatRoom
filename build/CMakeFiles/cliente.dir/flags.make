@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/grauler/Documentos/Chat_c/build/_deps/nlohmann_json-src/include
+CXX_INCLUDES = -I/home/grauler/Documentos/Chat_c/src/libs -I/home/grauler/Documentos/Chat_c/libs
 
 CXX_FLAGS = -std=gnu++17
 
