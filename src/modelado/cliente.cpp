@@ -5,10 +5,17 @@
 #include <sys/socket.h>
 #include <unistd.h>
 #include "json.hpp"
+#include <atomic>
 
 using namespace std;
 
 using json = nlohmann::json;
+
+std::atomic<uint64_t> id_counter{0};
+
+uint64_t generarIDUnico() {
+    return ++id_counter; 
+}
 
 // Archivo de prueba
 int main() {
@@ -32,6 +39,12 @@ int main() {
     serverAddress.sin_port = htons(puerto);
     serverAddress.sin_addr.s_addr = INADDR_ANY;
 
+    string nombre;
+    string mensaje;
+
+    std::cout << "Ingresa tu nombre de usuario: ";
+    cin >> nombre;
+
     // sending connection request
     if (connect(clientSocket, (struct sockaddr*)&serverAddress, sizeof(serverAddress)) ==-1) {
       std::cerr << "Error al conectarse";
@@ -39,10 +52,17 @@ int main() {
       return 1;
     }
 
-    std::cout << "✅ Conectado exitosamente al servidor en el puerto " << puerto << std::endl;    
+    send(clientSocket, nombre.c_str(), mensaje.length(), 0);
 
-    json miJson;
-        
+    // Json para identificar al cliente conectado
+    json identify;
+    identify["identificador"] = generarIDUnico();
+    identify["usuario"] = nombre;
+    std::string indentify_serializado = identify.dump();
+    
+    
+    std::cout << "✅ Conectado exitosamente al servidor en el puerto " << puerto << std::endl;
+    
     // sending data
     const char* message = "Hello, server!";
     send(clientSocket, message, strlen(message), 0);
