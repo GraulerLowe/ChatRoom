@@ -59,7 +59,11 @@ int main() {
     identify["identificador"] = generarIDUnico();
     identify["usuario"] = nombre;
     std::string indentify_serializado = identify.dump();
-    
+
+    if (send(clientSocket, indentify_serializado.c_str(),
+             indentify_serializado.length(), 0) == -1) {
+      std::cerr << "Error al enviar el cliente";
+    } 
     
     std::cout << "✅ Conectado exitosamente al servidor en el puerto " << puerto << std::endl;
     
