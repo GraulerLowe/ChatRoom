@@ -10,27 +10,16 @@ using namespace std;
 
 using json = nlohmann::json;
 
-void recibirDatos(int socket_fd) {
+json recibirJson(int socket_fd) {
     char buffer[1024] = {0};
-    
-    // 1. Leer los datos del socket
+
     ssize_t bytesLeidos = recv(socket_fd, buffer, 1024, 0);
-    
-    if (bytesLeidos > 0) {
-        std::string mensajeRecibido(buffer, bytesLeidos);
-        
-        try {
-            // 2. Parsear el string a un objeto JSON
-            json datosJson = json::parse(mensajeRecibido);
-            
-            // 3. Acceder a los datos del JSON
-            std::string tipo = datosJson["tipo"];
-            std::cout << "Tipo de mensaje recibido: " << tipo << std::endl;
-            
-        } catch (const json::parse_error& e) {
-            std::cerr << "Error al parsear el JSON: " << e.what() << std::endl;
-        }
+
+    if (bytesLeidos <= 0) {
+        return json{};
     }
+
+    return json::parse(std::string(buffer, bytesLeidos));
 }
 
 int main()
