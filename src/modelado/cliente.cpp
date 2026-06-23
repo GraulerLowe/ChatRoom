@@ -52,7 +52,7 @@ int main() {
       return 1;
     }
 
-    send(clientSocket, nombre.c_str(), mensaje.length(), 0);
+    send(clientSocket, nombre.c_str(), nombre.length(), 0);
 
     // Json para identificar al cliente conectado
     json identify;
