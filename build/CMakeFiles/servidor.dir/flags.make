@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/grauler/Documentos/Chat_c/src/libs
+CXX_INCLUDES = -I/home/grauler/Documentos/ChatRoom/src/libs
 
 CXX_FLAGS = -std=gnu++17
 

@@ -8,7 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/home/grauler/Documentos/Chat_c/src/modelado/cliente.cpp" "CMakeFiles/cliente.dir/src/modelado/cliente.cpp.o" "gcc" "CMakeFiles/cliente.dir/src/modelado/cliente.cpp.o.d"
+  "/home/grauler/Documentos/ChatRoom/src/modelado/cliente.cpp" "CMakeFiles/cliente.dir/src/modelado/cliente.cpp.o" "gcc" "CMakeFiles/cliente.dir/src/modelado/cliente.cpp.o.d"
   "" "cliente" "gcc" "CMakeFiles/cliente.dir/link.d"
   )
 

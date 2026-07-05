@@ -3,11 +3,11 @@
 
 cmake_minimum_required(VERSION ${CMAKE_VERSION}) # this file comes with cmake
 
-if(EXISTS "/home/grauler/Documentos/Chat_c/build/CMakeFiles/fc-stamp/nlohmann_json/nlohmann_json-gitclone-lastrun.txt" AND EXISTS "/home/grauler/Documentos/Chat_c/build/CMakeFiles/fc-stamp/nlohmann_json/nlohmann_json-gitinfo.txt" AND
-  "/home/grauler/Documentos/Chat_c/build/CMakeFiles/fc-stamp/nlohmann_json/nlohmann_json-gitclone-lastrun.txt" IS_NEWER_THAN "/home/grauler/Documentos/Chat_c/build/CMakeFiles/fc-stamp/nlohmann_json/nlohmann_json-gitinfo.txt")
+if(EXISTS "/home/grauler/Documentos/ChatRoom/build/CMakeFiles/fc-stamp/nlohmann_json/nlohmann_json-gitclone-lastrun.txt" AND EXISTS "/home/grauler/Documentos/ChatRoom/build/CMakeFiles/fc-stamp/nlohmann_json/nlohmann_json-gitinfo.txt" AND
+  "/home/grauler/Documentos/ChatRoom/build/CMakeFiles/fc-stamp/nlohmann_json/nlohmann_json-gitclone-lastrun.txt" IS_NEWER_THAN "/home/grauler/Documentos/ChatRoom/build/CMakeFiles/fc-stamp/nlohmann_json/nlohmann_json-gitinfo.txt")
   message(VERBOSE
     "Avoiding repeated git clone, stamp file is up to date: "
-    "'/home/grauler/Documentos/Chat_c/build/CMakeFiles/fc-stamp/nlohmann_json/nlohmann_json-gitclone-lastrun.txt'"
+    "'/home/grauler/Documentos/ChatRoom/build/CMakeFiles/fc-stamp/nlohmann_json/nlohmann_json-gitclone-lastrun.txt'"
   )
   return()
 endif()
@@ -22,12 +22,12 @@ else()
 endif()
 
 execute_process(
-  COMMAND ${CMAKE_COMMAND} -E rm -rf "/home/grauler/Documentos/Chat_c/build/_deps/nlohmann_json-src"
+  COMMAND ${CMAKE_COMMAND} -E rm -rf "/home/grauler/Documentos/ChatRoom/build/_deps/nlohmann_json-src"
   RESULT_VARIABLE error_code
   ${maybe_show_command}
 )
 if(error_code)
-  message(FATAL_ERROR "Failed to remove directory: '/home/grauler/Documentos/Chat_c/build/_deps/nlohmann_json-src'")
+  message(FATAL_ERROR "Failed to remove directory: '/home/grauler/Documentos/ChatRoom/build/_deps/nlohmann_json-src'")
 endif()
 
 # try the clone 3 times in case there is an odd git clone issue
@@ -37,7 +37,7 @@ while(error_code AND number_of_tries LESS 3)
   execute_process(
     COMMAND "/usr/bin/git"
             clone --no-checkout --config "advice.detachedHead=false" "https://github.com/nlohmann/json.git" "nlohmann_json-src"
-    WORKING_DIRECTORY "/home/grauler/Documentos/Chat_c/build/_deps"
+    WORKING_DIRECTORY "/home/grauler/Documentos/ChatRoom/build/_deps"
     RESULT_VARIABLE error_code
     ${maybe_show_command}
   )
@@ -53,7 +53,7 @@ endif()
 execute_process(
   COMMAND "/usr/bin/git"
           checkout "master" --
-  WORKING_DIRECTORY "/home/grauler/Documentos/Chat_c/build/_deps/nlohmann_json-src"
+  WORKING_DIRECTORY "/home/grauler/Documentos/ChatRoom/build/_deps/nlohmann_json-src"
   RESULT_VARIABLE error_code
   ${maybe_show_command}
 )
@@ -66,22 +66,22 @@ if(init_submodules)
   execute_process(
     COMMAND "/usr/bin/git" 
             submodule update --recursive --init 
-    WORKING_DIRECTORY "/home/grauler/Documentos/Chat_c/build/_deps/nlohmann_json-src"
+    WORKING_DIRECTORY "/home/grauler/Documentos/ChatRoom/build/_deps/nlohmann_json-src"
     RESULT_VARIABLE error_code
     ${maybe_show_command}
   )
 endif()
 if(error_code)
-  message(FATAL_ERROR "Failed to update submodules in: '/home/grauler/Documentos/Chat_c/build/_deps/nlohmann_json-src'")
+  message(FATAL_ERROR "Failed to update submodules in: '/home/grauler/Documentos/ChatRoom/build/_deps/nlohmann_json-src'")
 endif()
 
 # Complete success, update the script-last-run stamp file:
 #
 execute_process(
-  COMMAND ${CMAKE_COMMAND} -E copy "/home/grauler/Documentos/Chat_c/build/CMakeFiles/fc-stamp/nlohmann_json/nlohmann_json-gitinfo.txt" "/home/grauler/Documentos/Chat_c/build/CMakeFiles/fc-stamp/nlohmann_json/nlohmann_json-gitclone-lastrun.txt"
+  COMMAND ${CMAKE_COMMAND} -E copy "/home/grauler/Documentos/ChatRoom/build/CMakeFiles/fc-stamp/nlohmann_json/nlohmann_json-gitinfo.txt" "/home/grauler/Documentos/ChatRoom/build/CMakeFiles/fc-stamp/nlohmann_json/nlohmann_json-gitclone-lastrun.txt"
   RESULT_VARIABLE error_code
   ${maybe_show_command}
 )
 if(error_code)
-  message(FATAL_ERROR "Failed to copy script-last-run stamp file: '/home/grauler/Documentos/Chat_c/build/CMakeFiles/fc-stamp/nlohmann_json/nlohmann_json-gitclone-lastrun.txt'")
+  message(FATAL_ERROR "Failed to copy script-last-run stamp file: '/home/grauler/Documentos/ChatRoom/build/CMakeFiles/fc-stamp/nlohmann_json/nlohmann_json-gitclone-lastrun.txt'")
 endif()

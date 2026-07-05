@@ -3,9 +3,9 @@
 # No other meaning or use of this file is supported.
 
 method=git
-command=/usr/bin/cmake;-DCMAKE_MESSAGE_LOG_LEVEL=VERBOSE;-P;/home/grauler/Documentos/Chat_c/build/CMakeFiles/fc-tmp/nlohmann_json/nlohmann_json-gitclone.cmake
-source_dir=/home/grauler/Documentos/Chat_c/build/_deps/nlohmann_json-src
-work_dir=/home/grauler/Documentos/Chat_c/build/_deps
+command=/usr/bin/cmake;-DCMAKE_MESSAGE_LOG_LEVEL=VERBOSE;-P;/home/grauler/Documentos/ChatRoom/build/CMakeFiles/fc-tmp/nlohmann_json/nlohmann_json-gitclone.cmake
+source_dir=/home/grauler/Documentos/ChatRoom/build/_deps/nlohmann_json-src
+work_dir=/home/grauler/Documentos/ChatRoom/build/_deps
 repository=https://github.com/nlohmann/json.git
 remote=origin
 init_submodules=TRUE

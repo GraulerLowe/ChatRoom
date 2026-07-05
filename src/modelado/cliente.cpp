@@ -1,4 +1,5 @@
 #include <iostream>
+#include <thread>
 #include <ostream>
 #include <cstring>
 #include <netinet/in.h>
@@ -66,11 +67,8 @@ int main() {
     } 
     
     std::cout << "✅ Conectado exitosamente al servidor en el puerto " << puerto << std::endl;
-    
-    // sending data
-    const char* message = "Hello, server!";
-    send(clientSocket, message, strlen(message), 0);
 
+    
     // closing socket
     close(clientSocket);
 
