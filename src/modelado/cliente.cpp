@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string>
 #include <thread>
 #include <ostream>
 #include <cstring>
@@ -9,68 +10,124 @@
 #include <atomic>
 
 using namespace std;
-
 using json = nlohmann::json;
 
+// Contador global para generar IDs únicos por mensaje
 std::atomic<uint64_t> id_counter{0};
 
 uint64_t generarIDUnico() {
-    return ++id_counter; 
+    return ++id_counter;
 }
 
-// Archivo de prueba
 int main() {
 
+    // ── 1. DATOS DE CONEXIÓN ──────────────────────────────────────
 
     int puerto;
-    cout<<"Ingresa el puerto de servidor: ";
+    cout << "Ingresa el puerto de servidor: ";
     cin >> puerto;
 
     if (puerto < 1 || puerto > 65535) {
-        cerr << "Puerto inválido. Debe estar entre 1 y 65535" << std::endl;
+        cerr << "Puerto inválido. Debe estar entre 1 y 65535" << endl;
         return 1;
     }
-    
-    // creating socket
+
+    string nombre;
+    cout << "Ingresa tu nombre de usuario: ";
+    cin >> nombre;
+    cin.ignore(); // limpiar el '\n' que queda en el buffer después de cin >> nombre
+                  // sin esto, el primer getline() del thread de envío lee una línea vacía
+
+    // ── 2. CREAR SOCKET Y CONECTAR ────────────────────────────────
+
     int clientSocket = socket(AF_INET, SOCK_STREAM, 0);
 
-    // specifying address
     sockaddr_in serverAddress;
     serverAddress.sin_family = AF_INET;
     serverAddress.sin_port = htons(puerto);
     serverAddress.sin_addr.s_addr = INADDR_ANY;
 
-    string nombre;
-    string mensaje;
-
-    std::cout << "Ingresa tu nombre de usuario: ";
-    cin >> nombre;
-
-    // sending connection request
-    if (connect(clientSocket, (struct sockaddr*)&serverAddress, sizeof(serverAddress)) ==-1) {
-      std::cerr << "Error al conectarse";
-      close(clientSocket);
-      return 1;
+    if (connect(clientSocket, (struct sockaddr*)&serverAddress, sizeof(serverAddress)) == -1) {
+        cerr << "Error al conectarse" << endl;
+        close(clientSocket);
+        return 1;
     }
 
-    send(clientSocket, nombre.c_str(), nombre.length(), 0);
+    cout << "✅ Conectado exitosamente al servidor en el puerto " << puerto << endl;
 
-    // Json para identificar al cliente conectado
+    // ── 3. ENVIAR JSON DE IDENTIFICACIÓN ─────────────────────────
+    // Esto va ANTES de los threads para que el servidor sepa quién
+    // somos antes de recibir cualquier mensaje del chat.
+
     json identify;
     identify["identificador"] = generarIDUnico();
     identify["usuario"] = nombre;
-    std::string indentify_serializado = identify.dump();
+    string identify_serializado = identify.dump();
 
-    if (send(clientSocket, indentify_serializado.c_str(),
-             indentify_serializado.length(), 0) == -1) {
-      std::cerr << "Error al enviar el cliente";
-    } 
-    
-    std::cout << "✅ Conectado exitosamente al servidor en el puerto " << puerto << std::endl;
+    if (send(clientSocket, identify_serializado.c_str(), identify_serializado.length(), 0) == -1) {
+        cerr << "Error al enviar identificación" << endl;
+        close(clientSocket);
+        return 1;
+    }
 
-    
-    // closing socket
+    // ── 4. VARIABLE DE CONTROL COMPARTIDA ENTRE THREADS ──────────
+    // atomic<bool> para que ambos threads puedan leerla/escribirla
+    // sin race conditions. Cuando uno la pone en false, el otro se entera.
+
+    atomic<bool> corriendo{true};
+
+    // ── 5. THREAD DE ENVÍO ────────────────────────────────────────
+    // Lee mensajes del usuario por stdin y los manda al servidor.
+    // Se detiene cuando el usuario escribe "/salir".
+
+    thread t_send([&corriendo, &nombre, clientSocket]() {
+        string msg;
+
+        while (corriendo) {
+            getline(cin, msg);
+
+            if (msg == "/salir") {
+                corriendo = false;
+                break;
+            }
+
+            // Armar el JSON del mensaje con identificador, usuario y contenido
+            json message;
+            message["identificador"] = generarIDUnico();
+            message["usuario"] = nombre;
+            message["mensaje"] = msg;
+            string message_serializado = message.dump();
+
+            // Enviar el JSON serializado al servidor
+            // fix: usar message_serializado (el string), no message (el objeto json)
+            if (send(clientSocket, message_serializado.c_str(), message_serializado.length(), 0) == -1) {
+                cerr << "Error al enviar mensaje" << endl;
+                corriendo = false;
+                break;
+            }
+        }
+    });
+
+    thread t_recv([&]() {
+      char buf[1024];
+      while (corriendo) {
+        int message_recv = recv(clientSocket, buf, sizeof(buf) - 1, 0);
+        try {
+          json message = json::parse(message_recv);
+          
+        } catch (const json::parse_error &e) {
+          cerr << "Error al parsear el JSON: " << e.what() << endl;
+          }
+        }
+                
+      });
+    t_send.join();
+    // t_recv.join(); // descomentar cuando implementes t_recv
+
+    // ── 8. CERRAR SOCKET ──────────────────────────────────────────
+
     close(clientSocket);
+    cout << "Conexión cerrada." << endl;
 
     return 0;
 }
