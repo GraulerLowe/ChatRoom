@@ -112,8 +112,20 @@ int main() {
       char buf[1024];
       while (corriendo) {
         int message_recv = recv(clientSocket, buf, sizeof(buf) - 1, 0);
+        if (message_recv <= 0) {
+          // 0 = servidor cerró conexión, <0 = error
+          corriendo = false;
+          break;
+        }
+        buf[message_recv] = '\0';
+        
         try {
-          json message = json::parse(message_recv);
+          json message = json::parse(buf);
+          if (message.contains("mensaje") && message["mensaje"].is_string()) {
+            string mensaje = message["mensaje"];
+            string usuario = message["usuario"];
+            std::cout << usuario <<":" << mensaje << std::endl;
+            }
           
         } catch (const json::parse_error &e) {
           cerr << "Error al parsear el JSON: " << e.what() << endl;
@@ -122,7 +134,7 @@ int main() {
                 
       });
     t_send.join();
-    // t_recv.join(); // descomentar cuando implementes t_recv
+    t_recv.join();
 
     // ── 8. CERRAR SOCKET ──────────────────────────────────────────
 
