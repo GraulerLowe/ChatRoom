@@ -309,19 +309,19 @@ CMakeFiles/servidor.dir/src/modelado/servidor.cpp.o: /home/grauler/Documentos/Ch
   /usr/include/c++/16/valarray \
   /usr/include/c++/16/vector \
   /usr/include/c++/16/version \
-  /usr/include/c++/16/x86_64-redhat-linux/bits/atomic_word.h \
-  /usr/include/c++/16/x86_64-redhat-linux/bits/c++allocator.h \
-  /usr/include/c++/16/x86_64-redhat-linux/bits/c++config.h \
-  /usr/include/c++/16/x86_64-redhat-linux/bits/c++locale.h \
-  /usr/include/c++/16/x86_64-redhat-linux/bits/cpu_defines.h \
-  /usr/include/c++/16/x86_64-redhat-linux/bits/ctype_base.h \
-  /usr/include/c++/16/x86_64-redhat-linux/bits/ctype_inline.h \
-  /usr/include/c++/16/x86_64-redhat-linux/bits/error_constants.h \
-  /usr/include/c++/16/x86_64-redhat-linux/bits/gthr-default.h \
-  /usr/include/c++/16/x86_64-redhat-linux/bits/gthr.h \
-  /usr/include/c++/16/x86_64-redhat-linux/bits/messages_members.h \
-  /usr/include/c++/16/x86_64-redhat-linux/bits/os_defines.h \
-  /usr/include/c++/16/x86_64-redhat-linux/bits/time_members.h \
+  /usr/include/c++/16/x86_64-pc-linux-gnu/bits/atomic_word.h \
+  /usr/include/c++/16/x86_64-pc-linux-gnu/bits/c++allocator.h \
+  /usr/include/c++/16/x86_64-pc-linux-gnu/bits/c++config.h \
+  /usr/include/c++/16/x86_64-pc-linux-gnu/bits/c++locale.h \
+  /usr/include/c++/16/x86_64-pc-linux-gnu/bits/cpu_defines.h \
+  /usr/include/c++/16/x86_64-pc-linux-gnu/bits/ctype_base.h \
+  /usr/include/c++/16/x86_64-pc-linux-gnu/bits/ctype_inline.h \
+  /usr/include/c++/16/x86_64-pc-linux-gnu/bits/error_constants.h \
+  /usr/include/c++/16/x86_64-pc-linux-gnu/bits/gthr-default.h \
+  /usr/include/c++/16/x86_64-pc-linux-gnu/bits/gthr.h \
+  /usr/include/c++/16/x86_64-pc-linux-gnu/bits/messages_members.h \
+  /usr/include/c++/16/x86_64-pc-linux-gnu/bits/os_defines.h \
+  /usr/include/c++/16/x86_64-pc-linux-gnu/bits/time_members.h \
   /usr/include/ctype.h \
   /usr/include/endian.h \
   /usr/include/errno.h \
@@ -361,61 +361,52 @@ CMakeFiles/servidor.dir/src/modelado/servidor.cpp.o: /home/grauler/Documentos/Ch
   /usr/include/unistd.h \
   /usr/include/wchar.h \
   /usr/include/wctype.h \
-  /usr/lib/gcc/x86_64-redhat-linux/16/include/stdarg.h \
-  /usr/lib/gcc/x86_64-redhat-linux/16/include/stddef.h \
-  /usr/lib/gcc/x86_64-redhat-linux/16/include/stdint.h
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16/include/stdarg.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16/include/stddef.h \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16/include/stdint.h
 
-servidor: /lib64/ld-linux-x86-64.so.2 \
-  /lib64/libc.so.6 \
-  /lib64/libgcc_s.so.1 \
-  /lib64/libm.so.6 \
-  /lib64/libmvec.so.1 \
-  /usr/lib64/crt1.o \
-  /usr/lib64/crti.o \
-  /usr/lib64/crtn.o \
-  /usr/lib64/libc.so \
-  /usr/lib64/libm.so \
-  /usr/lib/gcc/x86_64-redhat-linux/16/crtbegin.o \
-  /usr/lib/gcc/x86_64-redhat-linux/16/crtend.o \
-  /usr/lib/gcc/x86_64-redhat-linux/16/libatomic.so \
-  /usr/lib/gcc/x86_64-redhat-linux/16/libatomic_asneeded.so \
-  /usr/lib/gcc/x86_64-redhat-linux/16/libgcc.a \
-  /usr/lib/gcc/x86_64-redhat-linux/16/libgcc_s.so \
-  /usr/lib/gcc/x86_64-redhat-linux/16/libstdc++.so \
-  /usr/lib64/libatomic.so.1.2.0 \
-  /usr/lib64/libc_nonshared.a \
+servidor: /usr/lib/Scrt1.o \
+  /usr/lib/crti.o \
+  /usr/lib/crtn.o \
+  /usr/lib/libc.so \
+  /usr/lib/libgcc_s.so.1 \
+  /usr/lib/libm.so \
+  /usr/lib/libstdc++.so \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16/crtbeginS.o \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16/crtendS.o \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16/libatomic.a \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16/libatomic_asneeded.so \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16/libgcc.a \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16/libgcc_s.so \
+  /usr/lib/ld-linux-x86-64.so.2 \
+  /usr/lib/libc.so.6 \
+  /usr/lib/libc_nonshared.a \
+  /usr/lib/libm.so.6 \
+  /usr/lib/libmvec.so.1 \
   CMakeFiles/servidor.dir/src/modelado/servidor.cpp.o
 
 
 CMakeFiles/servidor.dir/src/modelado/servidor.cpp.o:
 
-/usr/lib64/libatomic.so.1.2.0:
+/usr/lib/libmvec.so.1:
 
-/usr/lib/gcc/x86_64-redhat-linux/16/libgcc.a:
+/usr/lib/libm.so.6:
 
-/usr/lib/gcc/x86_64-redhat-linux/16/libatomic_asneeded.so:
+/usr/lib/libc_nonshared.a:
 
-/usr/lib/gcc/x86_64-redhat-linux/16/libatomic.so:
+/usr/lib/ld-linux-x86-64.so.2:
 
-/usr/lib/gcc/x86_64-redhat-linux/16/crtend.o:
+/usr/lib/gcc/x86_64-pc-linux-gnu/16/libgcc.a:
 
-/usr/lib/gcc/x86_64-redhat-linux/16/crtbegin.o:
+/usr/lib/libm.so:
 
-/usr/lib64/libm.so:
+/usr/lib/libgcc_s.so.1:
 
-/usr/lib64/crtn.o:
+/usr/lib/crti.o:
 
-/usr/lib64/crt1.o:
+/usr/lib/Scrt1.o:
 
-/lib64/libmvec.so.1:
-
-/lib64/libgcc_s.so.1:
-
-/lib64/libc.so.6:
-
-/lib64/ld-linux-x86-64.so.2:
-
-/usr/lib/gcc/x86_64-redhat-linux/16/include/stdint.h:
+/usr/lib/gcc/x86_64-pc-linux-gnu/16/include/stdint.h:
 
 /usr/include/wchar.h:
 
@@ -437,35 +428,45 @@ CMakeFiles/servidor.dir/src/modelado/servidor.cpp.o:
 
 /usr/include/stdlib.h:
 
-/usr/include/stdc-predef.h:
-
 /usr/include/netinet/in.h:
 
 /usr/include/math.h:
+
+/usr/lib/libstdc++.so:
 
 /usr/include/locale.h:
 
 /usr/include/linux/types.h:
 
+/usr/lib/gcc/x86_64-pc-linux-gnu/16/libatomic_asneeded.so:
+
 /usr/include/linux/errno.h:
+
+/usr/include/linux/close_range.h:
 
 /usr/include/gnu/stubs-64.h:
 
 /usr/include/features-time64.h:
 
-/usr/include/c++/16/x86_64-redhat-linux/bits/time_members.h:
+/usr/include/c++/16/x86_64-pc-linux-gnu/bits/time_members.h:
 
-/usr/include/linux/close_range.h:
+/usr/include/stdc-predef.h:
 
-/usr/include/c++/16/x86_64-redhat-linux/bits/os_defines.h:
+/usr/include/c++/16/x86_64-pc-linux-gnu/bits/os_defines.h:
 
-/usr/include/c++/16/x86_64-redhat-linux/bits/messages_members.h:
+/usr/include/c++/16/x86_64-pc-linux-gnu/bits/messages_members.h:
 
-/usr/include/c++/16/x86_64-redhat-linux/bits/gthr-default.h:
+/usr/include/c++/16/x86_64-pc-linux-gnu/bits/gthr.h:
 
-/usr/include/c++/16/x86_64-redhat-linux/bits/error_constants.h:
+/usr/include/c++/16/x86_64-pc-linux-gnu/bits/error_constants.h:
 
-/usr/include/c++/16/x86_64-redhat-linux/bits/c++allocator.h:
+/usr/include/c++/16/x86_64-pc-linux-gnu/bits/ctype_inline.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16/include/stdarg.h:
+
+/usr/include/c++/16/x86_64-pc-linux-gnu/bits/c++locale.h:
+
+/usr/include/c++/16/x86_64-pc-linux-gnu/bits/c++allocator.h:
 
 /usr/include/c++/16/vector:
 
@@ -473,13 +474,21 @@ CMakeFiles/servidor.dir/src/modelado/servidor.cpp.o:
 
 /usr/include/c++/16/type_traits:
 
+/usr/lib/libc.so.6:
+
 /usr/include/c++/16/tuple:
 
 /usr/include/c++/16/tr1/special_function_util.h:
 
+/usr/lib/gcc/x86_64-pc-linux-gnu/16/libgcc_s.so:
+
 /usr/include/c++/16/tr1/modified_bessel_func.tcc:
 
+/usr/lib/crtn.o:
+
 /usr/include/c++/16/tr1/legendre_function.tcc:
+
+/usr/include/c++/16/x86_64-pc-linux-gnu/bits/ctype_base.h:
 
 /usr/include/c++/16/tr1/ell_integral.tcc:
 
@@ -537,8 +546,6 @@ CMakeFiles/servidor.dir/src/modelado/servidor.cpp.o:
 
 /usr/include/c++/16/bits/fs_fwd.h:
 
-/lib64/libm.so.6:
-
 /usr/include/c++/16/bits/atomic_base.h:
 
 /usr/include/c++/16/pstl/execution_defs.h:
@@ -557,15 +564,17 @@ CMakeFiles/servidor.dir/src/modelado/servidor.cpp.o:
 
 /usr/include/bits/types/wint_t.h:
 
+/usr/include/c++/16/x86_64-pc-linux-gnu/bits/atomic_word.h:
+
 /usr/include/c++/16/array:
 
 /usr/include/c++/16/bits/basic_ios.h:
 
 /usr/include/c++/16/algorithm:
 
-/usr/include/bits/in.h:
+/usr/include/c++/16/x86_64-pc-linux-gnu/bits/cpu_defines.h:
 
-/usr/lib64/crti.o:
+/usr/include/bits/in.h:
 
 /usr/include/stdio.h:
 
@@ -603,8 +612,6 @@ CMakeFiles/servidor.dir/src/modelado/servidor.cpp.o:
 
 /usr/include/bits/types/locale_t.h:
 
-/usr/lib64/libc.so:
-
 /usr/include/ctype.h:
 
 /usr/include/c++/16/bits/stl_tempbuf.h:
@@ -625,6 +632,8 @@ CMakeFiles/servidor.dir/src/modelado/servidor.cpp.o:
 
 /usr/include/bits/types/__mbstate_t.h:
 
+/usr/lib/gcc/x86_64-pc-linux-gnu/16/crtendS.o:
+
 /usr/include/bits/stdio_lim.h:
 
 /usr/include/bits/types/__locale_t.h:
@@ -640,8 +649,6 @@ CMakeFiles/servidor.dir/src/modelado/servidor.cpp.o:
 /usr/include/bits/flt-eval-method.h:
 
 /usr/include/bits/timex.h:
-
-/usr/include/c++/16/x86_64-redhat-linux/bits/ctype_base.h:
 
 /usr/include/c++/16/bits/allocated_ptr.h:
 
@@ -665,8 +672,6 @@ CMakeFiles/servidor.dir/src/modelado/servidor.cpp.o:
 
 /usr/include/bits/types/error_t.h:
 
-/usr/include/c++/16/x86_64-redhat-linux/bits/c++config.h:
-
 /usr/include/bits/sockaddr.h:
 
 /usr/include/libintl.h:
@@ -684,8 +689,6 @@ CMakeFiles/servidor.dir/src/modelado/servidor.cpp.o:
 /usr/include/c++/16/cstdlib:
 
 /usr/include/bits/uintn-identity.h:
-
-/usr/lib/gcc/x86_64-redhat-linux/16/include/stddef.h:
 
 /usr/include/bits/typesizes.h:
 
@@ -709,13 +712,13 @@ CMakeFiles/servidor.dir/src/modelado/servidor.cpp.o:
 
 /usr/include/assert.h:
 
-/usr/lib/gcc/x86_64-redhat-linux/16/libgcc_s.so:
-
 /usr/include/bits/waitstatus.h:
 
 /usr/include/bits/wchar.h:
 
 /usr/include/bits/types/struct___jmp_buf_tag.h:
+
+/usr/include/c++/16/x86_64-pc-linux-gnu/bits/c++config.h:
 
 /usr/include/bits/setjmp.h:
 
@@ -730,6 +733,8 @@ CMakeFiles/servidor.dir/src/modelado/servidor.cpp.o:
 /usr/include/bits/mathcalls-macros.h:
 
 /usr/include/asm/ioctl.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16/include/stddef.h:
 
 /usr/include/bits/stdint-uintn.h:
 
@@ -748,8 +753,6 @@ CMakeFiles/servidor.dir/src/modelado/servidor.cpp.o:
 /home/grauler/Documentos/ChatRoom/src/modelado/json.hpp:
 
 /usr/include/alloca.h:
-
-/usr/include/c++/16/x86_64-redhat-linux/bits/cpu_defines.h:
 
 /usr/include/c++/16/bits/hashtable.h:
 
@@ -811,11 +814,11 @@ CMakeFiles/servidor.dir/src/modelado/servidor.cpp.o:
 
 /usr/include/c++/16/cstdio:
 
-/usr/include/c++/16/x86_64-redhat-linux/bits/atomic_word.h:
-
 /usr/include/c++/16/bits/vector.tcc:
 
 /usr/include/bits/floatn.h:
+
+/usr/include/c++/16/x86_64-pc-linux-gnu/bits/gthr-default.h:
 
 /usr/include/c++/16/bits/locale_facets_nonio.tcc:
 
@@ -828,6 +831,8 @@ CMakeFiles/servidor.dir/src/modelado/servidor.cpp.o:
 /usr/include/asm-generic/errno.h:
 
 /usr/include/c++/16/bits/stl_vector.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16/libatomic.a:
 
 /usr/include/string.h:
 
@@ -865,6 +870,8 @@ CMakeFiles/servidor.dir/src/modelado/servidor.cpp.o:
 
 /usr/include/c++/16/bits/localefwd.h:
 
+/usr/lib/gcc/x86_64-pc-linux-gnu/16/crtbeginS.o:
+
 /usr/include/c++/16/bits/ostream.tcc:
 
 /usr/include/c++/16/bits/shared_ptr_atomic.h:
@@ -889,6 +896,8 @@ CMakeFiles/servidor.dir/src/modelado/servidor.cpp.o:
 
 /usr/include/bits/pthreadtypes-arch.h:
 
+/usr/lib/libc.so:
+
 /usr/include/bits/pthreadtypes.h:
 
 /usr/include/bits/types/cookie_io_functions_t.h:
@@ -902,8 +911,6 @@ CMakeFiles/servidor.dir/src/modelado/servidor.cpp.o:
 /usr/include/bits/select.h:
 
 /usr/include/gnu/stubs.h:
-
-/usr/include/c++/16/x86_64-redhat-linux/bits/c++locale.h:
 
 /usr/include/c++/16/bits/std_abs.h:
 
@@ -995,13 +1002,9 @@ CMakeFiles/servidor.dir/src/modelado/servidor.cpp.o:
 
 /usr/include/c++/16/bits/locale_facets.h:
 
-/usr/lib/gcc/x86_64-redhat-linux/16/libstdc++.so:
-
 /usr/include/c++/16/bits/locale_facets.tcc:
 
 /usr/include/c++/16/bits/locale_facets_nonio.h:
-
-/usr/include/c++/16/x86_64-redhat-linux/bits/gthr.h:
 
 /usr/include/c++/16/bits/stl_heap.h:
 
@@ -1010,8 +1013,6 @@ CMakeFiles/servidor.dir/src/modelado/servidor.cpp.o:
 /usr/include/c++/16/bits/mask_array.h:
 
 /usr/include/c++/16/bits/unique_ptr.h:
-
-/usr/include/c++/16/x86_64-redhat-linux/bits/ctype_inline.h:
 
 /usr/include/c++/16/bits/move.h:
 
@@ -1028,8 +1029,6 @@ CMakeFiles/servidor.dir/src/modelado/servidor.cpp.o:
 /usr/include/c++/16/bits/ostream_print.h:
 
 /usr/include/c++/16/bits/parse_numbers.h:
-
-/usr/lib/gcc/x86_64-redhat-linux/16/include/stdarg.h:
 
 /usr/include/c++/16/bits/postypes.h:
 
@@ -1124,8 +1123,6 @@ CMakeFiles/servidor.dir/src/modelado/servidor.cpp.o:
 /usr/include/c++/16/bits/basic_ios.tcc:
 
 /usr/include/c++/16/cstdint:
-
-/usr/lib64/libc_nonshared.a:
 
 /usr/include/c++/16/ctime:
 

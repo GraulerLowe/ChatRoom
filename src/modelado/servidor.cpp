@@ -5,10 +5,14 @@
 #include <sys/socket.h>
 #include <unistd.h>
 #include "json.hpp"
+#include <vector>
+
 using namespace std;
 
 
 using json = nlohmann::json;
+
+vector<int> clientesConectados;
 
 json recibirJson(int socket_fd) {
     char buffer[1024] = {0};
@@ -97,7 +101,7 @@ int main()
             // Nueva conexión
             if (events[i].data.fd == serverSocket) {
 
-                int clientSocket = accept(serverSocket, nullptr, nullptr);
+              int clientSocket = accept(serverSocket, nullptr, nullptr);              
 
                 if (clientSocket == -1) {
                     cerr << "Error en accept\n";
@@ -111,6 +115,9 @@ int main()
                 clienteEvent.events = EPOLLIN;
                 clienteEvent.data.fd = clientSocket;
 
+                // Clientes guardados en un vector provisional
+                clientesConectados.push_back(clientSocket);
+                
                 if (epoll_ctl(epfd,
                               EPOLL_CTL_ADD,
                               clientSocket,
@@ -128,11 +135,15 @@ int main()
                 int client_fd = events[i].data.fd;
 
                 char buffer[1024];
-                int bytes = recv(client_fd,
-                                 buffer,
-                                 sizeof(buffer) - 1,
-                                 0);
+                int bytes = recv(client_fd, buffer, sizeof(buffer) - 1, 0);
 
+                json me = recibirJson(client_fd);
+                std::string mensaje = me.dump();
+
+                for (int cliente : clientesConectados) {
+                  send(cliente, mensaje.c_str(), mensaje.length(), 0);
+                  }
+                  
                 // Cliente cerró conexión
                 if (bytes == 0) {
 
