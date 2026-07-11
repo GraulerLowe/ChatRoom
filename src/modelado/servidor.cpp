@@ -137,7 +137,8 @@ int main()
                 char buffer[1024];
                 int bytes = recv(client_fd, buffer, sizeof(buffer) - 1, 0);
 
-                json me = recibirJson(client_fd);
+                buffer[bytes] = '\0';
+                json me = json::parse(buffer);
                 std::string mensaje = me.dump();
 
                 for (int cliente : clientesConectados) {
