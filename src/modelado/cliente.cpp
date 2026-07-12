@@ -88,6 +88,7 @@ int main() {
 
             if (msg == "/salir") {
                 corriendo = false;
+                shutdown(clientSocket, SHUT_RDWR);
                 break;
             }
 

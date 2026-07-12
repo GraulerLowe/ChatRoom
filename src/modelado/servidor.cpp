@@ -142,6 +142,7 @@ int main()
                 std::string mensaje = me.dump();
 
                 for (int cliente : clientesConectados) {
+                  if (cliente == client_fd) continue;
                   send(cliente, mensaje.c_str(), mensaje.length(), 0);
                   }
                   
