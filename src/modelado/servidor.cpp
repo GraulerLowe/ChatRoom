@@ -137,16 +137,6 @@ int main()
                 char buffer[1024];
                 int bytes = recv(client_fd, buffer, sizeof(buffer) - 1, 0);
 
-                buffer[bytes] = '\0';
-                json me = json::parse(buffer);
-                std::string mensaje = me.dump();
-
-                for (int cliente : clientesConectados) {
-                  if (cliente == client_fd) continue;
-                  send(cliente, mensaje.c_str(), mensaje.length(), 0);
-                  }
-                  
-                // Cliente cerró conexión
                 if (bytes == 0) {
 
                     cout << "Cliente desconectado: "
@@ -158,6 +148,7 @@ int main()
                               nullptr);
 
                     close(client_fd);
+                    continue;
                 }
                 // Error
                 else if (bytes < 0) {
@@ -171,7 +162,8 @@ int main()
                               nullptr);
 
                     close(client_fd);
-                }
+                    continue;
+                } 
                 // Mensaje recibido
                 else {
 
@@ -183,6 +175,16 @@ int main()
                          << buffer
                          << endl;
                 }
+                                
+                buffer[bytes] = '\0';
+                json me = json::parse(buffer);
+                std::string mensaje = me.dump();
+
+                for (int cliente : clientesConectados) {
+                  if (cliente == client_fd) continue;
+                  send(cliente, mensaje.c_str(), mensaje.length(), 0);
+                  }
+                  
             }
         }
     }
