@@ -24,6 +24,8 @@ int main() {
     // ── 1. DATOS DE CONEXIÓN ──────────────────────────────────────
 
     int puerto;
+    cout << "Bienvenido al ChatRoom" << endl;
+    cout << "Esta es la sala principal del chat."<<endl;
     cout << "Ingresa el puerto de servidor: ";
     cin >> puerto;
 
@@ -54,7 +56,7 @@ int main() {
     }
 
     cout << "✅ Conectado exitosamente al servidor en el puerto " << puerto << endl;
-
+    cout << "Para desconectarte escribe la palabra '/salir' " <<endl;
     // ── 3. ENVIAR JSON DE IDENTIFICACIÓN ─────────────────────────
     // Esto va ANTES de los threads para que el servidor sepa quién
     // somos antes de recibir cualquier mensaje del chat.
