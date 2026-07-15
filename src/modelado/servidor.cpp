@@ -1,8 +1,10 @@
 #include <cstring>
 #include <iostream>
+#include <algorithm>
 #include <sys/epoll.h>
 #include <netinet/in.h>
 #include <sys/socket.h>
+#include <type_traits>
 #include <unistd.h>
 #include "json.hpp"
 #include <vector>
@@ -14,17 +16,17 @@ using json = nlohmann::json;
 
 vector<int> clientesConectados;
 
-json recibirJson(int socket_fd) {
-    char buffer[1024] = {0};
+// json recibirJson(int socket_fd) {
+//     char buffer[1024] = {0};
 
-    ssize_t bytesLeidos = recv(socket_fd, buffer, 1024, 0);
+//     ssize_t bytesLeidos = recv(socket_fd, buffer, 1024, 0);
 
-    if (bytesLeidos <= 0) {
-        return json{};
-    }
+//     if (bytesLeidos <= 0) {
+//         return json{};
+//     }
 
-    return json::parse(std::string(buffer, bytesLeidos));
-}
+//     return json::parse(std::string(buffer, bytesLeidos));
+// }
 
 int main()
 {
@@ -146,7 +148,11 @@ int main()
                               EPOLL_CTL_DEL,
                               client_fd,
                               nullptr);
-
+                    clientesConectados.erase(
+                        remove(clientesConectados.begin(),
+                               clientesConectados.end(), client_fd),
+                         clientesConectados.end()
+                        );
                     close(client_fd);
                     continue;
                 }
@@ -178,6 +184,7 @@ int main()
                                 
                 buffer[bytes] = '\0';
                 json me = json::parse(buffer);
+                       
                 std::string mensaje = me.dump();
 
                 for (int cliente : clientesConectados) {
