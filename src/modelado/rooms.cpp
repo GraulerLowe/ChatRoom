@@ -1,21 +1,29 @@
 #include <iostream>
 #include <set>
-#include "servidor.cpp"
+#include <string>
+#include <sys/socket.h>
 #include "json.hpp"
 
 using namespace std;
-
+using json = nlohmann::json;
 class Room {
 
-public:
-  string nombre;
-  string contraseña;
-  set<string> usuarios;
-      
-  Room(string n, string c) {
-    nombre = n;
-    contraseña = c;
-    }
-  
-};
+private:
 
+    string nombre;
+    string contraseña;
+    set<int> usuarios;
+
+public:
+
+    Room(string nombre, string contraseña);
+
+    void agregarUsuario(int socket);
+
+    void eliminarUsuario(int socket);
+
+    bool contiene(int socket);
+
+    const set<int>& obtenerUsuarios() const;
+
+};
