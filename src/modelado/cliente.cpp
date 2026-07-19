@@ -8,9 +8,12 @@
 #include <unistd.h>
 #include "json.hpp"
 #include <atomic>
+#include <sstream>
 
 using namespace std;
 using json = nlohmann::json;
+
+
 
 // Contador global para generar IDs únicos por mensaje
 std::atomic<uint64_t> id_counter{0};
@@ -82,34 +85,136 @@ int main() {
     // Lee mensajes del usuario por stdin y los manda al servidor.
     // Se detiene cuando el usuario escribe "/salir".
 
-    thread t_send([&corriendo, &nombre, clientSocket]() {
-        string msg;
+thread t_send([&corriendo, &nombre, clientSocket]() {
 
-        while (corriendo) {
-            getline(cin, msg);
+    std::string msg;
 
-            if (msg == "/salir") {
+    while (corriendo) {
+
+        std::getline(std::cin, msg);
+
+        if (msg.empty())
+            continue;
+
+        // ---------------- COMANDOS ----------------
+        if (msg[0] == '/') {
+
+            std::istringstream iss(msg);
+
+            std::string comando;
+            std::string sala;
+            std::string contraseña;
+
+            iss >> comando >> sala >> contraseña;
+
+            if (comando == "/salir") {
                 corriendo = false;
                 shutdown(clientSocket, SHUT_RDWR);
                 break;
             }
 
-            // Armar el JSON del mensaje con identificador, usuario y contenido
-            json message;
-            message["identificador"] = generarIDUnico();
-            message["usuario"] = nombre;
-            message["mensaje"] = msg;
-            string message_serializado = message.dump();
+            else if (comando == "/crear") {
 
-            // Enviar el JSON serializado al servidor
-            // fix: usar message_serializado (el string), no message (el objeto json)
-            if (send(clientSocket, message_serializado.c_str(), message_serializado.length(), 0) == -1) {
-                cerr << "Error al enviar mensaje" << endl;
-                corriendo = false;
-                break;
+                if (sala.empty() || contraseña.empty()) {
+                    cout << "Uso: /crear <nombreSala> <contraseña>\n";
+                    continue;
+                }
+
+                json crear;
+                crear["accion"] = "createRoom";
+                crear["sala"] = sala;
+                crear["contraseña"] = contraseña;
+
+                string datos = crear.dump();
+
+                if (send(clientSocket,
+                         datos.c_str(),
+                         datos.length(),
+                         0) == -1) {
+
+                    cerr << "Error al crear sala\n";
+                    corriendo = false;
+                    break;
+                }
+
+                continue;
+            }
+
+            else if (comando == "/unir") {
+
+                if (sala.empty() || contraseña.empty()) {
+                    cout << "Uso: /unir <nombreSala> <contraseña>\n";
+                    continue;
+                }
+
+                json unir;
+                unir["accion"] = "joinRoom";
+                unir["sala"] = sala;
+                unir["contraseña"] = contraseña;
+
+                string datos = unir.dump();
+
+                if (send(clientSocket,
+                         datos.c_str(),
+                         datos.length(),
+                         0) == -1) {
+
+                    cerr << "Error al unirse a la sala\n";
+                    corriendo = false;
+                    break;
+                }
+
+                continue;
+            }
+
+            else if (comando == "/usuarios") {
+
+                json usuarios;
+                usuarios["accion"] = "usuarios";
+
+                string datos = usuarios.dump();
+
+                if (send(clientSocket,
+                         datos.c_str(),
+                         datos.length(),
+                         0) == -1) {
+
+                    cerr << "Error al solicitar usuarios\n";
+                    corriendo = false;
+                    break;
+                }
+
+                continue;
+            }
+
+            else {
+
+                cout << "Comando desconocido. Escribe /help para ayuda.\n";
+                continue;
             }
         }
-    });
+
+        // ---------------- MENSAJE NORMAL ----------------
+
+        json mensaje;
+        mensaje["accion"] = "mensaje";
+        mensaje["identificador"] = generarIDUnico();
+        mensaje["usuario"] = nombre;
+        mensaje["mensaje"] = msg;
+
+        string datos = mensaje.dump();
+
+        if (send(clientSocket,
+                 datos.c_str(),
+                 datos.length(),
+                 0) == -1) {
+
+            cerr << "Error al enviar mensaje\n";
+            corriendo = false;
+            break;
+        }
+    }
+});
 
     thread t_recv([&]() {
       char buf[1024];
