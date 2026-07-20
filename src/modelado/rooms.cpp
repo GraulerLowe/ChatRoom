@@ -1,4 +1,3 @@
-#include <iostream>
 #include <set>
 #include <string>
 #include <sys/socket.h>
@@ -24,6 +23,16 @@ public:
 
     bool contiene(int socket);
 
-    const set<int>& obtenerUsuarios() const;
+    const set<int> &obtenerUsuarios() const;
+
+  bool verificarContraseña(string pass) {
+    return contraseña == pass;
+  }
+
+  void broadcast(string mensaje) {
+    for (int fd : usuarios) {
+        send(fd, mensaje.c_str(), mensaje.length(), 0);
+    }
+  }
 
 };

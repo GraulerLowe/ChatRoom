@@ -7,6 +7,8 @@
 #include <type_traits>
 #include <unistd.h>
 #include "json.hpp"
+#include "rooms.cpp"
+
 #include <vector>
 
 using namespace std;
@@ -15,6 +17,8 @@ using namespace std;
 using json = nlohmann::json;
 
 vector<int> clientesConectados;
+unordered_map<string, Room> salas;
+unordered_map<int, string>  clientes;
 
 // json recibirJson(int socket_fd) {
 //     char buffer[1024] = {0};
