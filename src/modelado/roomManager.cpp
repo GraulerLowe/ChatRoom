@@ -1,16 +1,33 @@
-#include <iostream>
-#include <set>
 #include <string>
 #include <sys/socket.h>
-#include "json.hpp"
 #include "rooms.cpp"
 
+
+// Esta clase se encargara de la creacion de metodos; crear, unir, obtenerRoom.
+
 using namespace std;
-using json = nlohmann::json;
 
 class RoomManager {
 
 private:
-  string accion;
-  string usuario;
+
+    unordered_map<string, Room> salas;
+
+public:
+
+    bool crearSala(
+        const string& nombre,
+        const string& contraseña,
+        int creador
+    );
+
+    bool unirSala(
+        const string& nombre,
+        const string& contraseña,
+        int usuario
+    );
+
+    Room* obtenerSala(
+        const string& nombre
+    );
 };
