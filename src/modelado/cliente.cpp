@@ -60,6 +60,9 @@ int main() {
 
     cout << "✅ Conectado exitosamente al servidor en el puerto " << puerto << endl;
     cout << "Para desconectarte escribe la palabra '/salir' " <<endl;
+    cout << "Para crear una sala escribe la palabra '/crear <nombreSala> <contraseña>' " <<endl;
+    cout << "Para unirte a una sala escribe la palabra '/unir <nombreSala> <contraseña>' " <<endl;
+    cout << "Para consultar a los usuarios activos escribe la palabra '/usuarios' " <<endl;
     // ── 3. ENVIAR JSON DE IDENTIFICACIÓN ─────────────────────────
     // Esto va ANTES de los threads para que el servidor sepa quién
     // somos antes de recibir cualquier mensaje del chat.
