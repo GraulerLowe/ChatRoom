@@ -13,8 +13,6 @@
 using namespace std;
 using json = nlohmann::json;
 
-
-
 // Contador global para generar IDs únicos por mensaje
 std::atomic<uint64_t> id_counter{0};
 
@@ -28,7 +26,7 @@ int main() {
 
     int puerto;
     cout << "Bienvenido al ChatRoom" << endl;
-    cout << "Esta es la sala principal del chat."<<endl;
+    cout << "Esta es la sala principal del chat." << endl;
     cout << "Ingresa el puerto de servidor: ";
     cin >> puerto;
 
@@ -48,8 +46,8 @@ int main() {
     int clientSocket = socket(AF_INET, SOCK_STREAM, 0);
 
     sockaddr_in serverAddress;
-    serverAddress.sin_family = AF_INET;
-    serverAddress.sin_port = htons(puerto);
+    serverAddress.sin_family      = AF_INET;
+    serverAddress.sin_port        = htons(puerto);
     serverAddress.sin_addr.s_addr = INADDR_ANY;
 
     if (connect(clientSocket, (struct sockaddr*)&serverAddress, sizeof(serverAddress)) == -1) {
@@ -59,17 +57,18 @@ int main() {
     }
 
     cout << "✅ Conectado exitosamente al servidor en el puerto " << puerto << endl;
-    cout << "Para desconectarte escribe la palabra '/salir' " <<endl;
-    cout << "Para crear una sala escribe la palabra '/crear <nombreSala> <contraseña>' " <<endl;
-    cout << "Para unirte a una sala escribe la palabra '/unir <nombreSala> <contraseña>' " <<endl;
-    cout << "Para consultar a los usuarios activos escribe la palabra '/usuarios' " <<endl;
+    cout << "Para desconectarte escribe '/salir'" << endl;
+    cout << "Para crear una sala escribe '/crear <nombreSala> <contraseña>'" << endl;
+    cout << "Para unirte a una sala escribe '/unir <nombreSala> <contraseña>'" << endl;
+    cout << "Para consultar usuarios activos escribe '/usuarios'" << endl;
+
     // ── 3. ENVIAR JSON DE IDENTIFICACIÓN ─────────────────────────
-    // Esto va ANTES de los threads para que el servidor sepa quién
-    // somos antes de recibir cualquier mensaje del chat.
+    // Va ANTES de los threads para que el servidor sepa quién somos
+    // antes de recibir cualquier mensaje del chat.
 
     json identify;
     identify["identificador"] = generarIDUnico();
-    identify["usuario"] = nombre;
+    identify["usuario"]       = nombre;
     string identify_serializado = identify.dump();
 
     if (send(clientSocket, identify_serializado.c_str(), identify_serializado.length(), 0) == -1) {
@@ -88,162 +87,149 @@ int main() {
     // Lee mensajes del usuario por stdin y los manda al servidor.
     // Se detiene cuando el usuario escribe "/salir".
 
-thread t_send([&corriendo, &nombre, clientSocket]() {
+    thread t_send([&corriendo, &nombre, clientSocket]() {
 
-    std::string msg;
+        string msg;
 
-    while (corriendo) {
+        while (corriendo) {
 
-        std::getline(std::cin, msg);
+            getline(cin, msg);
 
-        if (msg.empty())
-            continue;
+            if (msg.empty())
+                continue;
 
-        // ---------------- COMANDOS ----------------
-        if (msg[0] == '/') {
+            // ── COMANDOS ─────────────────────────────────────────
+            if (msg[0] == '/') {
 
-            std::istringstream iss(msg);
+                istringstream iss(msg);
+                string comando, sala, contraseña;
+                iss >> comando >> sala >> contraseña;
 
-            std::string comando;
-            std::string sala;
-            std::string contraseña;
+                // /salir
+                if (comando == "/salir") {
+                    corriendo = false;
+                    shutdown(clientSocket, SHUT_RDWR); // despierta recv() en t_recv
+                    break;
+                }
 
-            iss >> comando >> sala >> contraseña;
+                // /crear <nombreSala> <contraseña>
+                else if (comando == "/crear") {
+                    if (sala.empty() || contraseña.empty()) {
+                        cout << "Uso: /crear <nombreSala> <contraseña>\n";
+                        continue;
+                    }
 
-            if (comando == "/salir") {
+                    json crear;
+                    crear["accion"]    = "/crear"; // debe coincidir con el servidor
+                    crear["sala"]      = sala;
+                    crear["contraseña"] = contraseña;
+                    string datos = crear.dump();
+
+                    if (send(clientSocket, datos.c_str(), datos.length(), 0) == -1) {
+                        cerr << "Error al crear sala\n";
+                        corriendo = false;
+                        break;
+                    }
+                    continue;
+                }
+
+                // /unir <nombreSala> <contraseña>
+                else if (comando == "/unir") {
+                    if (sala.empty() || contraseña.empty()) {
+                        cout << "Uso: /unir <nombreSala> <contraseña>\n";
+                        continue;
+                    }
+
+                    json unir;
+                    unir["accion"]    = "/unirse"; // debe coincidir con el servidor
+                    unir["sala"]      = sala;
+                    unir["contraseña"] = contraseña;
+                    string datos = unir.dump();
+
+                    if (send(clientSocket, datos.c_str(), datos.length(), 0) == -1) {
+                        cerr << "Error al unirse a la sala\n";
+                        corriendo = false;
+                        break;
+                    }
+                    continue;
+                }
+
+                // /usuarios
+                else if (comando == "/usuarios") {
+                    json usuarios;
+                    usuarios["accion"] = "/usuarios";
+                    string datos = usuarios.dump();
+
+                    if (send(clientSocket, datos.c_str(), datos.length(), 0) == -1) {
+                        cerr << "Error al solicitar usuarios\n";
+                        corriendo = false;
+                        break;
+                    }
+                    continue;
+                }
+
+                else {
+                    cout << "Comando desconocido. Comandos disponibles: /salir, /crear, /unir, /usuarios\n";
+                    continue;
+                }
+            }
+
+            // ── MENSAJE NORMAL ────────────────────────────────────
+
+            json mensaje;
+            mensaje["accion"]       = "mensaje";
+            mensaje["identificador"] = generarIDUnico();
+            mensaje["usuario"]      = nombre;
+            mensaje["mensaje"]      = msg;
+            string datos = mensaje.dump();
+
+            if (send(clientSocket, datos.c_str(), datos.length(), 0) == -1) {
+                cerr << "Error al enviar mensaje\n";
                 corriendo = false;
-                shutdown(clientSocket, SHUT_RDWR);
+                break;
+            }
+        }
+    });
+
+    // ── 6. THREAD DE RECEPCIÓN ────────────────────────────────────
+    // Escucha mensajes entrantes del servidor y los muestra en pantalla.
+    // Maneja tanto JSON (mensajes de otros usuarios) como texto plano
+    // (avisos y confirmaciones del servidor).
+
+    thread t_recv([&corriendo, clientSocket]() {
+        char buf[1024];
+
+        while (corriendo) {
+            int n = recv(clientSocket, buf, sizeof(buf) - 1, 0);
+
+            if (n <= 0) {
+                // 0 = servidor cerró conexión, <0 = error o shutdown()
+                corriendo = false;
                 break;
             }
 
-            else if (comando == "/crear") {
+            buf[n] = '\0';
 
-                if (sala.empty() || contraseña.empty()) {
-                    cout << "Uso: /crear <nombreSala> <contraseña>\n";
-                    continue;
+            try {
+                // intenta parsear como JSON (mensaje de otro usuario)
+                json message = json::parse(buf);
+
+                if (message.contains("mensaje") && message.contains("usuario")) {
+                    cout << message["usuario"].get<string>()
+                         << ": "
+                         << message["mensaje"].get<string>()
+                         << endl;
                 }
 
-                json crear;
-                crear["accion"] = "createRoom";
-                crear["sala"] = sala;
-                crear["contraseña"] = contraseña;
-
-                string datos = crear.dump();
-
-                if (send(clientSocket,
-                         datos.c_str(),
-                         datos.length(),
-                         0) == -1) {
-
-                    cerr << "Error al crear sala\n";
-                    corriendo = false;
-                    break;
-                }
-
-                continue;
-            }
-
-            else if (comando == "/unir") {
-
-                if (sala.empty() || contraseña.empty()) {
-                    cout << "Uso: /unir <nombreSala> <contraseña>\n";
-                    continue;
-                }
-
-                json unir;
-                unir["accion"] = "joinRoom";
-                unir["sala"] = sala;
-                unir["contraseña"] = contraseña;
-
-                string datos = unir.dump();
-
-                if (send(clientSocket,
-                         datos.c_str(),
-                         datos.length(),
-                         0) == -1) {
-
-                    cerr << "Error al unirse a la sala\n";
-                    corriendo = false;
-                    break;
-                }
-
-                continue;
-            }
-
-            else if (comando == "/usuarios") {
-
-                json usuarios;
-                usuarios["accion"] = "usuarios";
-
-                string datos = usuarios.dump();
-
-                if (send(clientSocket,
-                         datos.c_str(),
-                         datos.length(),
-                         0) == -1) {
-
-                    cerr << "Error al solicitar usuarios\n";
-                    corriendo = false;
-                    break;
-                }
-
-                continue;
-            }
-
-            else {
-
-                cout << "Comando desconocido. Escribe /help para ayuda.\n";
-                continue;
+            } catch (const json::parse_error& e) {
+                // no es JSON → es texto plano del servidor (avisos, confirmaciones)
+                cout << buf << flush;
             }
         }
+    });
 
-        // ---------------- MENSAJE NORMAL ----------------
+    // ── 7. ESPERAR THREADS ────────────────────────────────────────
 
-        json mensaje;
-        mensaje["accion"] = "mensaje";
-        mensaje["identificador"] = generarIDUnico();
-        mensaje["usuario"] = nombre;
-        mensaje["mensaje"] = msg;
-
-        string datos = mensaje.dump();
-
-        if (send(clientSocket,
-                 datos.c_str(),
-                 datos.length(),
-                 0) == -1) {
-
-            cerr << "Error al enviar mensaje\n";
-            corriendo = false;
-            break;
-        }
-    }
-});
-
-    thread t_recv([&]() {
-      char buf[1024];
-      while (corriendo) {
-        int message_recv = recv(clientSocket, buf, sizeof(buf) - 1, 0);
-        if (message_recv <= 0) {
-          // 0 = servidor cerró conexión, <0 = error
-          corriendo = false;
-          break;
-        }
-        buf[message_recv] = '\0';
-        
-        try {
-          json message = json::parse(buf);
-          if (message.contains("mensaje") && message["mensaje"].is_string()) {
-            string mensaje = message["mensaje"];
-            string usuario = message["usuario"];
-            std::cout << usuario <<":" << mensaje << std::endl;
-            }
-          
-        } catch (const json::parse_error &e) {
-          cerr << "Error al parsear el JSON: " << e.what() << endl;
-          }
-        }
-                
-      });
     t_send.join();
     t_recv.join();
 
