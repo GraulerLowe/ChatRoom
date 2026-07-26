@@ -3,6 +3,7 @@
 
 CMakeFiles/servidor.dir/src/modelado/servidor.cpp.o: /home/grauler/Documentos/ChatRoom/src/modelado/servidor.cpp \
   /home/grauler/Documentos/ChatRoom/src/modelado/json.hpp \
+  /home/grauler/Documentos/ChatRoom/src/modelado/rooms.hpp \
   /usr/include/alloca.h \
   /usr/include/asm-generic/bitsperlong.h \
   /usr/include/asm-generic/errno-base.h \
@@ -208,10 +209,12 @@ CMakeFiles/servidor.dir/src/modelado/servidor.cpp.o: /home/grauler/Documentos/Ch
   /usr/include/c++/16/bits/stl_iterator_base_types.h \
   /usr/include/c++/16/bits/stl_map.h \
   /usr/include/c++/16/bits/stl_multimap.h \
+  /usr/include/c++/16/bits/stl_multiset.h \
   /usr/include/c++/16/bits/stl_numeric.h \
   /usr/include/c++/16/bits/stl_pair.h \
   /usr/include/c++/16/bits/stl_raw_storage_iter.h \
   /usr/include/c++/16/bits/stl_relops.h \
+  /usr/include/c++/16/bits/stl_set.h \
   /usr/include/c++/16/bits/stl_tempbuf.h \
   /usr/include/c++/16/bits/stl_tree.h \
   /usr/include/c++/16/bits/stl_uninitialized.h \
@@ -283,6 +286,7 @@ CMakeFiles/servidor.dir/src/modelado/servidor.cpp.o: /home/grauler/Documentos/Ch
   /usr/include/c++/16/pstl/glue_numeric_defs.h \
   /usr/include/c++/16/pstl/pstl_config.h \
   /usr/include/c++/16/ratio \
+  /usr/include/c++/16/set \
   /usr/include/c++/16/sstream \
   /usr/include/c++/16/stdexcept \
   /usr/include/c++/16/streambuf \
@@ -371,13 +375,13 @@ servidor: /usr/lib/Scrt1.o \
   /usr/lib/libc.so \
   /usr/lib/libgcc_s.so.1 \
   /usr/lib/libm.so \
-  /usr/lib/libstdc++.so \
   /usr/lib/gcc/x86_64-pc-linux-gnu/16/crtbeginS.o \
   /usr/lib/gcc/x86_64-pc-linux-gnu/16/crtendS.o \
-  /usr/lib/gcc/x86_64-pc-linux-gnu/16/libatomic.a \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16/libatomic.so \
   /usr/lib/gcc/x86_64-pc-linux-gnu/16/libatomic_asneeded.so \
   /usr/lib/gcc/x86_64-pc-linux-gnu/16/libgcc.a \
   /usr/lib/gcc/x86_64-pc-linux-gnu/16/libgcc_s.so \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16/libstdc++.so \
   /usr/lib/ld-linux-x86-64.so.2 \
   /usr/lib/libc.so.6 \
   /usr/lib/libc_nonshared.a \
@@ -432,8 +436,6 @@ CMakeFiles/servidor.dir/src/modelado/servidor.cpp.o:
 
 /usr/include/math.h:
 
-/usr/lib/libstdc++.so:
-
 /usr/include/locale.h:
 
 /usr/include/linux/types.h:
@@ -445,8 +447,6 @@ CMakeFiles/servidor.dir/src/modelado/servidor.cpp.o:
 /usr/include/linux/close_range.h:
 
 /usr/include/gnu/stubs-64.h:
-
-/usr/include/features-time64.h:
 
 /usr/include/c++/16/x86_64-pc-linux-gnu/bits/time_members.h:
 
@@ -504,6 +504,8 @@ CMakeFiles/servidor.dir/src/modelado/servidor.cpp.o:
 
 /usr/include/c++/16/sstream:
 
+/usr/include/c++/16/set:
+
 /usr/include/c++/16/ratio:
 
 /usr/include/c++/16/pstl/glue_numeric_defs.h:
@@ -531,6 +533,8 @@ CMakeFiles/servidor.dir/src/modelado/servidor.cpp.o:
 /usr/include/c++/16/forward_list:
 
 /usr/include/c++/16/filesystem:
+
+/usr/include/c++/16/ext/concurrence.h:
 
 /usr/include/c++/16/bits/basic_string.tcc:
 
@@ -618,15 +622,11 @@ CMakeFiles/servidor.dir/src/modelado/servidor.cpp.o:
 
 /usr/include/bits/types/clock_t.h:
 
-/usr/include/c++/16/bits/char_traits.h:
-
-/usr/include/bits/types/__fpos_t.h:
+/usr/include/bits/mathcalls.h:
 
 /usr/include/c++/16/functional:
 
 /home/grauler/Documentos/ChatRoom/src/modelado/servidor.cpp:
-
-/usr/include/bits/mathcalls.h:
 
 /usr/include/bits/ioctls.h:
 
@@ -645,6 +645,8 @@ CMakeFiles/servidor.dir/src/modelado/servidor.cpp.o:
 /usr/include/linux/posix_types.h:
 
 /usr/include/bits/types/FILE.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16/libstdc++.so:
 
 /usr/include/bits/flt-eval-method.h:
 
@@ -674,33 +676,23 @@ CMakeFiles/servidor.dir/src/modelado/servidor.cpp.o:
 
 /usr/include/bits/sockaddr.h:
 
-/usr/include/libintl.h:
+/usr/include/bits/uintn-identity.h:
 
-/usr/include/bits/endianness.h:
-
-/usr/include/asm/ioctls.h:
-
-/usr/include/c++/16/bits/atomic_lockfree_defines.h:
+/usr/include/bits/typesizes.h:
 
 /usr/include/bits/cpu-set.h:
+
+/usr/include/c++/16/bits/atomic_lockfree_defines.h:
 
 /usr/include/bits/errno.h:
 
 /usr/include/c++/16/cstdlib:
-
-/usr/include/bits/uintn-identity.h:
-
-/usr/include/bits/typesizes.h:
 
 /usr/include/linux/sockios.h:
 
 /usr/include/c++/16/bits/memory_resource.h:
 
 /usr/include/bits/confname.h:
-
-/usr/include/asm-generic/ioctls.h:
-
-/usr/include/c++/16/bits/ostream.h:
 
 /usr/include/c++/16/bits/predefined_ops.h:
 
@@ -711,6 +703,42 @@ CMakeFiles/servidor.dir/src/modelado/servidor.cpp.o:
 /usr/include/c++/16/bits/requires_hosted.h:
 
 /usr/include/assert.h:
+
+/usr/include/asm/ioctls.h:
+
+/usr/include/c++/16/bits/ostream.h:
+
+/usr/include/asm-generic/ioctls.h:
+
+/usr/include/libintl.h:
+
+/usr/include/bits/endianness.h:
+
+/usr/include/asm/ioctl.h:
+
+/usr/include/c++/16/version:
+
+/usr/include/asm-generic/int-ll64.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16/libatomic.so:
+
+/usr/include/bits/mathcalls-macros.h:
+
+/usr/include/c++/16/clocale:
+
+/usr/include/asm-generic/errno-base.h:
+
+/usr/include/c++/16/bits/stl_multiset.h:
+
+/usr/include/features.h:
+
+/usr/include/bits/types/__FILE.h:
+
+/usr/include/bits/sched.h:
+
+/usr/include/c++/16/bits/memoryfwd.h:
+
+/usr/include/c++/16/bits/stl_construct.h:
 
 /usr/include/bits/waitstatus.h:
 
@@ -725,14 +753,6 @@ CMakeFiles/servidor.dir/src/modelado/servidor.cpp.o:
 /usr/include/c++/16/bits/range_access.h:
 
 /usr/include/asm/bitsperlong.h:
-
-/usr/include/c++/16/version:
-
-/usr/include/asm-generic/int-ll64.h:
-
-/usr/include/bits/mathcalls-macros.h:
-
-/usr/include/asm/ioctl.h:
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/16/include/stddef.h:
 
@@ -756,10 +776,6 @@ CMakeFiles/servidor.dir/src/modelado/servidor.cpp.o:
 
 /usr/include/c++/16/bits/hashtable.h:
 
-/usr/include/c++/16/clocale:
-
-/usr/include/asm-generic/errno-base.h:
-
 /usr/include/linux/ioctl.h:
 
 /usr/include/bits/fp-logb.h:
@@ -777,16 +793,6 @@ CMakeFiles/servidor.dir/src/modelado/servidor.cpp.o:
 /usr/include/bits/time.h:
 
 /usr/include/asm/posix_types.h:
-
-/usr/include/features.h:
-
-/usr/include/bits/types/__FILE.h:
-
-/usr/include/bits/sched.h:
-
-/usr/include/c++/16/bits/memoryfwd.h:
-
-/usr/include/c++/16/bits/stl_construct.h:
 
 /usr/include/bits/epoll.h:
 
@@ -826,13 +832,13 @@ CMakeFiles/servidor.dir/src/modelado/servidor.cpp.o:
 
 /usr/include/bits/thread-shared-types.h:
 
+/home/grauler/Documentos/ChatRoom/src/modelado/rooms.hpp:
+
 /usr/include/bits/ioctl-types.h:
 
 /usr/include/asm-generic/errno.h:
 
 /usr/include/c++/16/bits/stl_vector.h:
-
-/usr/lib/gcc/x86_64-pc-linux-gnu/16/libatomic.a:
 
 /usr/include/string.h:
 
@@ -909,6 +915,16 @@ CMakeFiles/servidor.dir/src/modelado/servidor.cpp.o:
 /usr/include/bits/socket.h:
 
 /usr/include/bits/select.h:
+
+/usr/include/bits/types/__fpos_t.h:
+
+/usr/include/c++/16/bits/char_traits.h:
+
+/usr/include/c++/16/ext/string_conversions.h:
+
+/usr/include/bits/atomic_wide_counter.h:
+
+/usr/include/c++/16/bits/charconv.h:
 
 /usr/include/gnu/stubs.h:
 
@@ -1066,6 +1082,10 @@ CMakeFiles/servidor.dir/src/modelado/servidor.cpp.o:
 
 /usr/include/c++/16/bits/stl_pair.h:
 
+/usr/include/features-time64.h:
+
+/usr/include/c++/16/bits/stl_set.h:
+
 /usr/include/c++/16/bits/stl_uninitialized.h:
 
 /usr/include/c++/16/bits/string_view.tcc:
@@ -1085,12 +1105,6 @@ CMakeFiles/servidor.dir/src/modelado/servidor.cpp.o:
 /usr/include/c++/16/bits/stl_algobase.h:
 
 /usr/include/c++/16/bits/valarray_after.h:
-
-/usr/include/bits/atomic_wide_counter.h:
-
-/usr/include/c++/16/bits/charconv.h:
-
-/usr/include/c++/16/ext/string_conversions.h:
 
 /usr/include/c++/16/optional:
 
@@ -1147,5 +1161,3 @@ CMakeFiles/servidor.dir/src/modelado/servidor.cpp.o:
 /usr/include/c++/16/debug/debug.h:
 
 /usr/include/c++/16/exception:
-
-/usr/include/c++/16/ext/concurrence.h:

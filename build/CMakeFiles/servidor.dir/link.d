@@ -3,7 +3,7 @@ servidor: \
   /usr/lib/gcc/x86_64-pc-linux-gnu/16/../../../../lib/crti.o \
   /usr/lib/gcc/x86_64-pc-linux-gnu/16/crtbeginS.o \
   CMakeFiles/servidor.dir/src/modelado/servidor.cpp.o \
-  /usr/lib/gcc/x86_64-pc-linux-gnu/16/../../../../lib/libstdc++.so \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16/libstdc++.so \
   /usr/lib/gcc/x86_64-pc-linux-gnu/16/../../../../lib/libm.so \
   /usr/lib/gcc/x86_64-pc-linux-gnu/16/../../../../lib/libm.so \
   /usr/lib/gcc/x86_64-pc-linux-gnu/16/../../../../lib/libm.so \
@@ -18,7 +18,7 @@ servidor: \
   /usr/lib/gcc/x86_64-pc-linux-gnu/16/libatomic_asneeded.so \
   /usr/lib/gcc/x86_64-pc-linux-gnu/16/libatomic_asneeded.so \
   /usr/lib/gcc/x86_64-pc-linux-gnu/16/libatomic_asneeded.so \
-  /usr/lib/gcc/x86_64-pc-linux-gnu/16/libatomic.a \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16/libatomic.so \
   /usr/lib/gcc/x86_64-pc-linux-gnu/16/../../../../lib/libc.so \
   /usr/lib/gcc/x86_64-pc-linux-gnu/16/../../../../lib/libc.so \
   /usr/lib/gcc/x86_64-pc-linux-gnu/16/../../../../lib/libc.so \
@@ -43,7 +43,7 @@ servidor: \
 
 CMakeFiles/servidor.dir/src/modelado/servidor.cpp.o:
 
-/usr/lib/gcc/x86_64-pc-linux-gnu/16/../../../../lib/libstdc++.so:
+/usr/lib/gcc/x86_64-pc-linux-gnu/16/libstdc++.so:
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/16/../../../../lib/libm.so:
 
@@ -73,7 +73,7 @@ CMakeFiles/servidor.dir/src/modelado/servidor.cpp.o:
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/16/libatomic_asneeded.so:
 
-/usr/lib/gcc/x86_64-pc-linux-gnu/16/libatomic.a:
+/usr/lib/gcc/x86_64-pc-linux-gnu/16/libatomic.so:
 
 /usr/lib/gcc/x86_64-pc-linux-gnu/16/../../../../lib/libc.so:
 

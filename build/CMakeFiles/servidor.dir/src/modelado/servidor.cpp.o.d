@@ -242,4 +242,7 @@ CMakeFiles/servidor.dir/src/modelado/servidor.cpp.o: \
  /usr/include/c++/16/bits/fs_dir.h /usr/include/c++/16/bits/fs_ops.h \
  /usr/include/c++/16/optional /usr/include/c++/16/numeric \
  /usr/include/c++/16/bits/stl_numeric.h \
- /usr/include/c++/16/pstl/glue_numeric_defs.h /usr/include/c++/16/any
+ /usr/include/c++/16/pstl/glue_numeric_defs.h /usr/include/c++/16/any \
+ /home/grauler/Documentos/ChatRoom/src/modelado/rooms.hpp \
+ /usr/include/c++/16/set /usr/include/c++/16/bits/stl_set.h \
+ /usr/include/c++/16/bits/stl_multiset.h

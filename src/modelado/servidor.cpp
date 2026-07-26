@@ -15,11 +15,12 @@ using json = nlohmann::json;
 
 vector<int>                  clientesConectados;
 unordered_map<string, Room>  salas;
-unordered_map<int, string>   clientes; // fd → nombre
+unordered_map<int, string>   clientes;     // fd → nombre
+unordered_map<int, string>   clienteEnSala; // fd → sala activa
 
 int main()
 {
-    // ── 1. CREAR SOCKET ──────────────────────────────────────────
+    // ── 1. CREAR SOCKET ───────────────────────────────────────────
     int serverSocket = socket(AF_INET, SOCK_STREAM, 0);
     if (serverSocket == -1) {
         cerr << "Error al crear socket\n";
@@ -123,19 +124,18 @@ int main()
                     string usuario = clientes.count(client_fd) ? clientes[client_fd] : "desconocido";
                     cout << usuario << " desconectado (fd=" << client_fd << ")\n";
 
-                    // avisar a todos
                     string aviso = "*** " + usuario + " salió del chat ***\n";
                     for (int fd : clientesConectados) {
                         if (fd == client_fd) continue;
                         send(fd, aviso.c_str(), aviso.length(), 0);
                     }
 
-                    // eliminar de todas las salas
                     for (auto& [nombre, sala] : salas) {
                         sala.eliminarUsuario(client_fd);
                     }
 
                     clientes.erase(client_fd);
+                    clienteEnSala.erase(client_fd); // limpiar sala activa
                     clientesConectados.erase(
                         remove(clientesConectados.begin(),
                                clientesConectados.end(), client_fd),
@@ -150,6 +150,7 @@ int main()
                 else if (bytes < 0) {
                     cerr << "Error en recv para cliente fd=" << client_fd << endl;
                     clientes.erase(client_fd);
+                    clienteEnSala.erase(client_fd); // limpiar sala activa
                     clientesConectados.erase(
                         remove(clientesConectados.begin(),
                                clientesConectados.end(), client_fd),
@@ -165,12 +166,12 @@ int main()
                     buffer[bytes] = '\0';
 
                     try {
-                        json msg    = json::parse(buffer);
+                        json msg      = json::parse(buffer);
                         string accion = msg.value("accion", "mensaje");
 
                         // ── primera vez → identify ────────────────
                         if (clientes.find(client_fd) == clientes.end()) {
-                            string usuario = msg["usuario"];
+                            string usuario      = msg["usuario"];
                             clientes[client_fd] = usuario;
                             cout << usuario << " se identificó\n";
 
@@ -190,8 +191,9 @@ int main()
                                 send(client_fd, err.c_str(), err.length(), 0);
                             } else {
                                 salas.emplace(nombre_sala, Room(nombre_sala, pass));
-                                salas[nombre_sala].agregarUsuario(client_fd);
-                                string ok = "*** Sala '" + nombre_sala + "' creada ***\n";
+                                salas.at(nombre_sala).agregarUsuario(client_fd);
+                                clienteEnSala[client_fd] = nombre_sala; // registrar sala activa
+                                string ok = "*** Sala '" + nombre_sala + "' creada. Ahora estás en '" + nombre_sala + "' ***\n";
                                 send(client_fd, ok.c_str(), ok.length(), 0);
                             }
 
@@ -203,39 +205,45 @@ int main()
                             if (!salas.count(nombre_sala)) {
                                 string err = "*** Sala '" + nombre_sala + "' no existe ***\n";
                                 send(client_fd, err.c_str(), err.length(), 0);
-                            } else if (!salas[nombre_sala].verificarContraseña(pass)) {
+                            } else if (!salas.at(nombre_sala).verificarContraseña(pass)) {
                                 string err = "*** Contraseña incorrecta ***\n";
                                 send(client_fd, err.c_str(), err.length(), 0);
                             } else {
-                                salas[nombre_sala].agregarUsuario(client_fd);
+                                salas.at(nombre_sala).agregarUsuario(client_fd);
+                                clienteEnSala[client_fd] = nombre_sala; // registrar sala activa
                                 string ok = "*** Entraste a '" + nombre_sala + "' ***\n";
                                 send(client_fd, ok.c_str(), ok.length(), 0);
                             }
 
-                        // ── mensaje a sala ────────────────────────
-                        } else if (accion == "/mensaje_sala") {
-                            string nombre_sala = msg["sala"];
-                            string texto       = msg["mensaje"];
-                            string usuario     = clientes[client_fd];
-                            string salida      = "[" + nombre_sala + "] " + usuario + ": " + texto + "\n";
-
-                            if (!salas.count(nombre_sala) || !salas[nombre_sala].contiene(client_fd)) {
-                                string err = "*** No estás en esa sala ***\n";
-                                send(client_fd, err.c_str(), err.length(), 0);
-                            } else {
-                                salas[nombre_sala].broadcast(salida);
+                        // ── /usuarios ─────────────────────────────
+                        } else if (accion == "/usuarios") {
+                            string lista = "*** Usuarios conectados: ";
+                            for (auto& [fd, nombre] : clientes) {
+                                lista += nombre + " ";
                             }
+                            lista += "***\n";
+                            send(client_fd, lista.c_str(), lista.length(), 0);
 
-                        // ── mensaje general ───────────────────────
+                        // ── mensaje (sala o general) ───────────────
                         } else {
                             string usuario = clientes[client_fd];
                             string texto   = msg["mensaje"];
-                            string salida  = usuario + ": " + texto + "\n";
 
-                            cout << salida;
-                            for (int fd : clientesConectados) {
-                                if (fd == client_fd) continue;
-                                send(fd, salida.c_str(), salida.length(), 0);
+                            // ¿está en una sala? → mandar a la sala
+                            if (clienteEnSala.count(client_fd)) {
+                                string nombre_sala = clienteEnSala[client_fd];
+                                string salida = "[" + nombre_sala + "] " + usuario + ": " + texto + "\n";
+                                cout << salida;
+                                salas.at(nombre_sala).broadcast(salida);
+
+                            // si no → mensaje general a todos
+                            } else {
+                                string salida = usuario + ": " + texto + "\n";
+                                cout << salida;
+                                for (int fd : clientesConectados) {
+                                    if (fd == client_fd) continue;
+                                    send(fd, salida.c_str(), salida.length(), 0);
+                                }
                             }
                         }
 
@@ -250,4 +258,4 @@ int main()
     close(epfd);
     close(serverSocket);
     return 0;
-} 
+}

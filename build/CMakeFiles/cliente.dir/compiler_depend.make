@@ -363,13 +363,13 @@ cliente: /usr/lib/Scrt1.o \
   /usr/lib/libc.so \
   /usr/lib/libgcc_s.so.1 \
   /usr/lib/libm.so \
-  /usr/lib/libstdc++.so \
   /usr/lib/gcc/x86_64-pc-linux-gnu/16/crtbeginS.o \
   /usr/lib/gcc/x86_64-pc-linux-gnu/16/crtendS.o \
-  /usr/lib/gcc/x86_64-pc-linux-gnu/16/libatomic.a \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16/libatomic.so \
   /usr/lib/gcc/x86_64-pc-linux-gnu/16/libatomic_asneeded.so \
   /usr/lib/gcc/x86_64-pc-linux-gnu/16/libgcc.a \
   /usr/lib/gcc/x86_64-pc-linux-gnu/16/libgcc_s.so \
+  /usr/lib/gcc/x86_64-pc-linux-gnu/16/libstdc++.so \
   /usr/lib/ld-linux-x86-64.so.2 \
   /usr/lib/libc.so.6 \
   /usr/lib/libc_nonshared.a \
@@ -415,8 +415,6 @@ CMakeFiles/cliente.dir/src/modelado/cliente.cpp.o:
 /usr/include/netinet/in.h:
 
 /usr/include/math.h:
-
-/usr/lib/libstdc++.so:
 
 /usr/include/locale.h:
 
@@ -642,6 +640,8 @@ CMakeFiles/cliente.dir/src/modelado/cliente.cpp.o:
 
 /usr/include/bits/types/FILE.h:
 
+/usr/lib/gcc/x86_64-pc-linux-gnu/16/libstdc++.so:
+
 /usr/include/bits/flt-eval-method.h:
 
 /usr/include/bits/timex.h:
@@ -731,6 +731,8 @@ CMakeFiles/cliente.dir/src/modelado/cliente.cpp.o:
 /usr/include/alloca.h:
 
 /usr/include/c++/16/bits/hashtable.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/16/libatomic.so:
 
 /usr/include/bits/mathcalls-macros.h:
 
@@ -843,8 +845,6 @@ CMakeFiles/cliente.dir/src/modelado/cliente.cpp.o:
 /usr/include/c++/16/x86_64-pc-linux-gnu/bits/c++config.h:
 
 /usr/include/bits/setjmp.h:
-
-/usr/lib/gcc/x86_64-pc-linux-gnu/16/libatomic.a:
 
 /usr/include/string.h:
 
